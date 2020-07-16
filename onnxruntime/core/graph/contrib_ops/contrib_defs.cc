@@ -2247,7 +2247,28 @@ Example 4:
           {"tensor(float)"},
           "Constrain to tensor(float).")
       .SetDoc(R"DOC(The WordConvEmbedding takes in a batch of sequence words and embed each word to a vector.)DOC");
-
+    
+    ONNX_CONTRIB_OPERATOR_SCHEMA(GDPredict)
+         .SetDomain(kMSDomain)
+         .SinceVersion(1)
+         .Attr(
+             "weights",
+             "Integer representing the embedding vector size for each word."
+             "If not provide, use the fileter size of conv weight",
+             AttributeProto::STRING,
+             OPTIONAL_VALUE)
+         .Input(0, "Features", "Specify batchs of sequence words to embedding", "T1")
+         .Output(0, "Values", "output", "T2")
+         .TypeConstraint(
+             "T1",
+             {"tensor(int32)", "tensor(uint32)"},
+             "Constrain to tensor(int32).")
+         .TypeConstraint(
+             "T2",
+             {"tensor(float)"},
+             "Constrain to tensor(float).")
+         .SetDoc(R"DOC(The WordConvEmbedding takes in a batch of sequence words and embed each word to a vector.)DOC");
+    
   ONNX_CONTRIB_OPERATOR_SCHEMA(Pad)
       .SetDomain(kMSDomain)
       .SinceVersion(1)
